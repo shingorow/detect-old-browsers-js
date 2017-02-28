@@ -25,13 +25,13 @@
       <script src="/js/detect-old-ies.js"></script>
       <script>
  		var intentUrl = 'intent://{{currentUrl}}#Intent;scheme=https;action=android.intent.action.VIEW;package=com.android.chrome;end',
-				isAndroidBrowser,
-				isOldIE,
-				alertBoxOnAndroid,
-				intentToChrome,
-				alertBoxOnIE,
-				linkToChrome,
-				href;
+			isAndroidBrowser,
+			isOldIE,
+			alertBoxOnAndroid,
+			intentToChrome,
+			alertBoxOnIE,
+			linkToChrome,
+			href;
 
 		isAndroidBrowser = DetectAndroidBrowser();
 		isOldIE = DetectOldIEs('lte_IE8');
