@@ -17,46 +17,43 @@
     </head>
     
     <body>
-      <div id="alert-on-android-browser">
-        <a id="alert-on-android-browser__intent">Google Chromeでひらく</a>
-      </div>
-
-      <div id="alert-on-ie">
-        <a id="alert-on-ie__link-to-chrome" href="https://www.google.co.jp/chrome/browser/desktop/">Google Chromeをインストールする</a>
+      <div id="alert-on-old-browser">
+        <a id="alert-on-old-browser__link-to-new-browser">Google Chromeでひらく</a>
       </div>
       
       <script src="/js/detect-android-browser.js"></script>
       <script src="/js/detect-old-ies.js"></script>
       <script>
-        /* global DetectAndroidBrowser */
-        /* global DetectOldIEs */
-        /* global location */
-        var intentUrl = 'intent://{{currentUrl}}#Intent;scheme=https;action=android.intent.action.VIEW;package=com.android.chrome;end',
-            isAndroidBrowser,
-            isOldIE,
-            alertBoxOnAndroid,
-            intentToChrome,
-            alertBoxOnIE,
-            linkToChrome,
-            href;
-            
-        isAndroidBrowser = DetectAndroidBrowser();
-        if (isAndroidBrowser) {
-          alertBoxOnAndroid = document.getElementById('alert-on-android-browser');
-          intentToChrome = document.getElementById('alert-on-android-browser__intent');
-          href = location.href;
-          href = href.replace(/^https?:\/\/(.+?)\/?$/, '$1');
-          intentUrl = intentUrl.replace(/{{currentUrl}}/, href);
-          intentToChrome.setAttribute('href', intentUrl);
-          alertBoxOnAndroid.style.display = 'block';
-        }
-        
-        isOldIE = DetectOldIEs('lte_IE8');
-        if (isOldIE) {
-          alertBoxOnIE = document.getElementById('alert-on-ie');
-          linkToChrome = document.getElementById('alert-on-ie__link-to-chrome');
-          alertBoxOnIE.style.display = 'block';
-        }
+ 		var intentUrl = 'intent://{{currentUrl}}#Intent;scheme=https;action=android.intent.action.VIEW;package=com.android.chrome;end',
+				isAndroidBrowser,
+				isOldIE,
+				alertBoxOnAndroid,
+				intentToChrome,
+				alertBoxOnIE,
+				linkToChrome,
+				href;
+
+		isAndroidBrowser = DetectAndroidBrowser();
+		isOldIE = DetectOldIEs('lte_IE8');
+
+		if (isAndroidBrowser || isOldIE) {
+			alertBox = document.getElementById('alert-on-old-browser');
+			newBrowserAnchor = document.getElementById('alert-on-old-browser__link-to-new-browser');
+
+			if (isAndroidBrowser) {
+				href = location.href;
+				href = href.replace(/^https?:\/\/(.+?)\/?$/, '$1');
+				intentUrl = intentUrl.replace(/{{currentUrl}}/, href);
+				newBrowserAnchor.href = intentUrl;
+			}
+
+			if (isOldIE) {
+				linkToChrome = 'https://www.google.co.jp/chrome/browser/desktop/';
+				newBrowserAnchor.href = linkToChrome;
+			}
+
+			alertBox.style.display = 'block';
+		}
       </script>
     </body>
 </html>
